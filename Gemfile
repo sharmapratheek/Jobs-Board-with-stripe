@@ -57,6 +57,12 @@ gem 'devise'
 gem 'bulma-rails'
 gem 'simple_form'
 gem 'sidekiq'
+gem 'gravatar_image_tag', '~> 1.2'
+gem 'carrierwave', '~> 1.2', '>= 1.2.2'
+gem 'mini_magick', '~> 4.8'
+gem 'stripe', '~> 3.15'
+gem 'trix', '~> 0.11.1'
+
 group :development, :test do
   gem 'better_errors'
   gem 'guard'
