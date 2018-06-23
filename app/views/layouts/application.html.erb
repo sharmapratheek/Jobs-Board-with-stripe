@@ -7,7 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag 'application', "https://js.stripe.com/v2/", "https://js.stripe.com/v3/", 'data-turbolinks-track': 'reload' %>
+
+    <%= tag :meta, name: "stripe-public-key", content: Figaro.env.stripe_publishable_key %>
+
   </head>
 
   <body class="<%= yield (:body_class) %>">
@@ -40,7 +43,10 @@
           <div class="navbar-item">
             <div class="field is-grouped">
             <% if user_signed_in? %>
-
+              <p class="control">
+                <%= link_to "Post Job" , new_job_path ,class: "navbar-item button is-primary is-rounded"%>
+              </p>
+              
               <div class="navbar-item has-dropdown is-hoverable">
                 <%= link_to 'Account', edit_user_registration_path, class: "navbar-link" %>
                 <div class="navbar-dropdown is-right">
