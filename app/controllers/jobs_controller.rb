@@ -1,9 +1,17 @@
 class JobsController < ApplicationController
   before_action :set_job ,only: [:show,:edit,:update,:destroy]
   before_action :authenticate_user! ,only: [:new,:edit,:destroy,:update,:create]
+
+
+
   def index
-  	@job = Job.all.order("created_at DESC")
+    if(params.has_key?(:job_type))
+      @job = Job.where(job_type: params[:job_type]).order("created_at desc")
+    else
+      @job = Job.all.order("created_at desc")
+    end
   end
+
 
   def show
 
@@ -29,13 +37,13 @@ class JobsController < ApplicationController
 
   def update
   	if @job.update(job_params);
-  		redirect_to "index"
+  		redirect_to :root
   	end
   end 
 
   def destroy 
   	@job.destroy 
-  	redirect_to index
+  	redirect_to :root
   end 
 
   private 

@@ -1,2 +1,51 @@
-<h1>Jobs#index</h1>
-<p>Find me in app/views/jobs/index.html.erb</p>
+<div class="columns border-top border-right">
+	<div class="column is-2 bg-light">
+		<div class="pl3 pr1">
+			<%= render "panel" %>
+		</div>
+	</div>
+
+	<div class="column is-9 p16">
+		<% @job.each do |job|%>
+			<div class="columns border-bottom pt4">
+				<div class="column is-1">
+					<% if !job.avatar.file.nil? %>
+						<%= link_to image_tag(job.avatar_url(:thumb),alt:job.job_author) ,job.url%>
+
+					<% end %>
+				</div>
+				<div class="column is-8 ">
+					<h3 class="title is-4 index-title"><%= link_to job.title,job %></h3>	
+					<ul>
+						<li><%= link_to job.job_author ,job.url %></li>
+					</ul>
+					<div class="pv2 f6">
+						<%= sanitize(job.description.truncate(200,seperator: '</p>'))%>
+					</div>
+					<% if current_user.try(:admin) || job_author(job)%>
+						<ul>
+							<li>Admin controls:</li>
+							<li class="inline-block ">
+								<%= link_to "View" , job ,class: " button is-small is-link is-outlined"%>
+							</li>
+							<li class="inline-block">
+								<%= link_to "Edit" ,edit_job_path(job) ,class: "button is-link is-small is-outlined" %>
+							</li>
+							<li class="inline-block">
+								<%= link_to "Delete" ,job ,method: :delete,data: {confirm: "Are you sure"},class: "button is-link is-small is-outlined"%>
+							</li>
+						</ul>
+					<% end %>
+				</div>
+				<div class="column has-text-right">
+					<%= job_type(job.job_type)%>
+					<p class="pt2 f6"><%= job.location%></p>
+				</div>
+
+			</div>
+
+
+		<% end %>
+	</div>
+
+</div>
